@@ -279,7 +279,7 @@ class MessageSchema(Schema):
     passport_data = Nested(PassportDataSchema)
 
 
-class WebHookMessageShame(Schema):
+class WebHookMessageSchema(Schema):
     update_id = Int()
 
     message = Nested(MessageSchema)
