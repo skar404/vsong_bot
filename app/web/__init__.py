@@ -13,7 +13,10 @@ bp = Blueprint('default')
 
 
 @bp.get('ping')
-async def ping(_request):
+async def ping(request):
+    async with request.app.pg_client.acquire() as conn:
+        req = await conn.execute("SELECT 1;")
+
     return success()
 
 
