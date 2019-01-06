@@ -6,15 +6,15 @@ bot_handler = TelegramRouter(bot_token=BOT_TOKEN)
 
 
 @bot_handler.command(command='start')
-async def send_message(message):
+async def send_message(message, _request):
     await TelegramSDK().send_message(chat_id=message['message']['chat']['id'], message="""
         Привет @{user_name},
         Просто отправь мне имя артиста и/или название композиции,
         и я найду эту песню для тебя!
-        """.format(user_name=message['message']['chat']['username']))
+        """.format(user_name=message['message']['from']['username']))
 
 
 @bot_handler.text()
-async def get_track(message):
+async def get_track(message, _request):
     await TelegramSDK().send_message(chat_id=message['message']['chat']['id'], message="""
     Начал искать трек: *{message}*""".format(message=message['message']['text']))

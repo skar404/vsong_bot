@@ -6,7 +6,7 @@ from app.models import Base
 class UsersInfoModel(Base):
     __tablename__ = 'users_info'
 
-    id = Column(Integer, primary_key=True, autoincrement=False)
+    id = Column(Integer, primary_key=True, autoincrement=True)
 
     telegram_id = Column(Integer, nullable=False, unique=True)
 
@@ -22,7 +22,7 @@ class UsersInfoModel(Base):
 class MusicModel(Base):
     __tablename__ = 'music'
 
-    id = Column(Integer, primary_key=True, autoincrement=False)
+    id = Column(Integer, primary_key=True, autoincrement=True)
 
     artist = Column(String(255))
     title = Column(String(255))
@@ -37,7 +37,7 @@ class MusicModel(Base):
 class UsersStatsModel(Base):
     __tablename__ = 'users_stats'
 
-    id = Column(Integer, primary_key=True, autoincrement=False)
+    id = Column(Integer, primary_key=True, autoincrement=True)
 
     is_user = Column(ForeignKey('users_info.id'))
     is_music = Column(ForeignKey('music.id'))

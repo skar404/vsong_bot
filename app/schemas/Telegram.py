@@ -3,6 +3,13 @@ from marshmallow.fields import Int, Bool, Str, Nested, Float
 from marshmallow.validate import OneOf
 
 
+"""
+API Telegram schema:
+
+https://core.telegram.org/bots/api#update
+"""
+
+
 class UserSchema(Schema):
     id = Int(required=True)
     is_bot = Bool()
