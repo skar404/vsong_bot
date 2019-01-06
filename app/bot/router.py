@@ -45,8 +45,6 @@ class TelegramRouter:
         uri = self.get_uri_in_message(message)
         if self.register_routers.get(uri):
             return await self.register_routers[uri].handler(message)
-        print()
-
 
     def register(self):
         for route in self.routes:
