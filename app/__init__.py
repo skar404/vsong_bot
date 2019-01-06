@@ -1,8 +1,11 @@
+import aiohttp
 from sanic import Sanic
 from aiohttp import ClientSession
 from aiopg.sa import Engine
 from sanic.log import LOGGING_CONFIG_DEFAULTS, logger
 
+from app import settings
+from app.clients.Telegram import TelegramSDK
 from app.web import bp
 
 
@@ -14,16 +17,26 @@ class SanicApp(Sanic):
 application = SanicApp(__name__, log_config=LOGGING_CONFIG_DEFAULTS)
 
 
-def run_web():
-    @application.listener('before_server_start')
+def create_app(app: SanicApp) -> SanicApp:
+    @app.listener('before_server_start')
     async def init(app: SanicApp, loop):
-        app.aiohttp_session = ClientSession(loop=loop)
+        app.aiohttp_session = ClientSession(loop=loop, connector=aiohttp.TCPConnector(verify_ssl=False))
 
-    @application.listener('after_server_stop')
-    def finish(app, loop):
+        # update telegram web hook
+        assert (await TelegramSDK().update_web_hook()).get('ok')
+
+    @app.listener('after_server_stop')
+    async def finish(app, loop):
         loop.run_until_complete(app.session.close())
         loop.close()
 
-    application.blueprint(bp)
+    app.blueprint(bp)
+    return app
 
-    application.go_fast(debug=True)
+
+def run_web():
+    create_app(application).go_fast(
+        debug=settings.DEBUG,
+        workers=settings.WORKERS_NUM,
+        auto_reload=False  # если включить то сломаеться дебаг в PyCharm
+    )
