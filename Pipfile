@@ -15,7 +15,7 @@ aiopg = "*"
 sqlalchemy = "*"
 psycopg2-binary = "*"
 envparse = "*"
-marshmallow = "*"
+marshmallow = ">==3.0.0rc2"
 
 [requires]
 python_version = "3.7"

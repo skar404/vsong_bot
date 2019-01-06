@@ -6,7 +6,7 @@ from sanic.log import LOGGING_CONFIG_DEFAULTS, logger
 
 from app import settings
 from app.clients.Telegram import TelegramSDK
-from app.web import bp
+from app.web import bp, bot_handler
 
 
 class SanicApp(Sanic):
@@ -31,6 +31,8 @@ def create_app(app: SanicApp) -> SanicApp:
         loop.close()
 
     app.blueprint(bp)
+    bot_handler.register()
+
     return app
 
 
