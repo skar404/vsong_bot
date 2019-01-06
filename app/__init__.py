@@ -1,4 +1,6 @@
 import aiohttp
+import sentry_sdk
+from sentry_sdk.integrations.sanic import SanicIntegration
 from sanic import Sanic
 from aiohttp import ClientSession
 from aiopg.sa import Engine, create_engine
@@ -6,7 +8,7 @@ from sanic.log import LOGGING_CONFIG_DEFAULTS, logger
 
 from app import settings
 from app.clients.Telegram import TelegramSDK
-from app.settings import PSQL_USER, PSQL_PASSWORD, PSQL_HOST, PSQL_POST, PSQL_DATE_BASE
+from app.settings import PSQL_USER, PSQL_PASSWORD, PSQL_HOST, PSQL_POST, PSQL_DATE_BASE, SENTRY_KEY
 from app.web import bp, bot_handler
 
 
@@ -14,6 +16,11 @@ class SanicApp(Sanic):
     aiohttp_session: ClientSession
     pg_client: Engine
 
+
+sentry_sdk.init(
+    dsn=SENTRY_KEY,
+    integrations=[SanicIntegration()]
+)
 
 application = SanicApp(__name__, log_config=LOGGING_CONFIG_DEFAULTS)
 

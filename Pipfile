@@ -17,6 +17,7 @@ psycopg2-binary = "*"
 envparse = "*"
 marshmallow = ">==3.0.0rc2"
 alembic = "*"
+sentry-sdk = "==0.6.6"
 
 [requires]
 python_version = "3.7"

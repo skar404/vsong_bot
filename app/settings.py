@@ -21,3 +21,5 @@ PSQL_PASSWORD = env('PSQL_PASSWORD', default='1234')
 PSQL_HOST = env('PSQL_HOST', default='127.0.0.1')
 PSQL_POST = env('PSQL_POST', cast=int, default=5432)
 PSQL_DATE_BASE = env('PSQL_DATE_BASE', default='dev')
+
+SENTRY_KEY = env('SENTRY_KEY', default='')
