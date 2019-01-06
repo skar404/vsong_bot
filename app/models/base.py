@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, DateTime, func
+from sqlalchemy import Column, String, Integer, DateTime, func, ForeignKey
 
 from app.models import Base
 
@@ -39,7 +39,7 @@ class UsersStatsModel(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=False)
 
-    is_user = Column()
-    is_music = Column()
+    is_user = Column(ForeignKey('users_info.id'))
+    is_music = Column(ForeignKey('music.id'))
 
     time_created = Column(DateTime(timezone=True), server_default=func.now())

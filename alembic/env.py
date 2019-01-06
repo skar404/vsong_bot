@@ -5,6 +5,15 @@ from logging.config import fileConfig
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
+import os, sys
+
+from sqlalchemy.engine.url import URL
+
+
+sys.path.append(os.getcwd())
+from app import PSQL_USER, PSQL_PASSWORD, PSQL_HOST, PSQL_POST, PSQL_DATE_BASE
+from app.models import Base
+
 config = context.config
 
 # Interpret the config file for Python logging.
@@ -15,7 +24,8 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = Base.metadata
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -50,12 +60,19 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
-        prefix='sqlalchemy.',
-        poolclass=pool.NullPool)
 
-    with connectable.connect() as connection:
+    alembic_config = config.get_section(config.config_ini_section)
+    alembic_config['sqlalchemy.url'] = URL(
+        drivername='postgresql',
+        username=PSQL_USER,
+        password=PSQL_PASSWORD,
+        host=PSQL_HOST,
+        port=PSQL_POST,
+        database=PSQL_DATE_BASE
+    )
+    engine = engine_from_config(alembic_config)
+
+    with engine.connect() as connection:
         context.configure(
             connection=connection,
             target_metadata=target_metadata
@@ -63,6 +80,7 @@ def run_migrations_online():
 
         with context.begin_transaction():
             context.run_migrations()
+
 
 if context.is_offline_mode():
     run_migrations_offline()
