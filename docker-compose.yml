@@ -1,4 +1,10 @@
 version: '3'
 services:
-  bot:
-    image: ...
+  postgres:
+    image: postgres:11.1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: dev
+    ports:
+      - "5432:5432"
