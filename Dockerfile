@@ -7,12 +7,8 @@ RUN \
 
 WORKDIR /code
 
-RUN pip install pipenv
-
-ADD Pipfile .
-ADD Pipfile.lock .
-
-RUN pipenv install --deploy
+ADD requirements.txt .
+RUN pip install -r requirements.txt
 
 ADD . /code
 
