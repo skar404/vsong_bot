@@ -4,8 +4,7 @@
 
 run app:
 ```bash
-pip install pipenv
-pipenv install 
+pip install -r requirements.txt
 python manage.py web
 ```
 
