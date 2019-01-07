@@ -1,3 +1,4 @@
+import aio_pika
 import aiohttp
 import sentry_sdk
 from sentry_sdk.integrations.sanic import SanicIntegration
@@ -8,11 +9,13 @@ from sanic.log import LOGGING_CONFIG_DEFAULTS, logger
 
 from app import settings
 from app.clients.Telegram import TelegramSDK
-from app.settings import PSQL_USER, PSQL_PASSWORD, PSQL_HOST, PSQL_POST, PSQL_DATE_BASE, SENTRY_KEY
+from app.settings import PSQL_USER, PSQL_PASSWORD, PSQL_HOST, PSQL_POST, PSQL_DATE_BASE, SENTRY_KEY, RABBIT_HOST, \
+    RABBIT_PORT, RABBIT_USER, RABBIT_PASSWORD, RABBIT_VHOST, RABBIT_SSL
 from app.web import bp, bot_handler
 
 
 class SanicApp(Sanic):
+    aio_pika: aio_pika.Connection
     aiohttp_session: ClientSession
     pg_client: Engine
 
@@ -28,6 +31,16 @@ application = SanicApp(__name__, log_config=LOGGING_CONFIG_DEFAULTS)
 def create_app(app: SanicApp) -> SanicApp:
     @app.listener('before_server_start')
     async def init(app: SanicApp, loop):
+        app.aio_pika = await aio_pika.connect_robust(
+            host=RABBIT_HOST,
+            port=RABBIT_PORT,
+            login=RABBIT_USER,
+            password=RABBIT_PASSWORD,
+            virtualhost=RABBIT_VHOST,
+            ssl=RABBIT_SSL,
+            loop=loop
+        )
+
         app.aiohttp_session = ClientSession(loop=loop, connector=aiohttp.TCPConnector(verify_ssl=False))
         logger.info('init aiohttp_session')
 
