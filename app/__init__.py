@@ -46,7 +46,7 @@ def create_app(app: SanicApp) -> SanicApp:
 
     @app.listener('after_server_stop')
     async def finish(app, loop):
-        app.pg_client.close()
+        app.aiohttp_session.close()
         loop.run_until_complete(app.session.close())
         loop.close()
 
