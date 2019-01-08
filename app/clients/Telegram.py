@@ -26,6 +26,16 @@ class TelegramClient(BaseClient):
         )
         return req
 
+    async def delete_message(self, chat_id: str, message_id: int):
+        req = await self.post(
+            url=self._get_url('deleteMessage'),
+            params={
+                'chat_id': chat_id,
+                'message_id': message_id,
+            }
+        )
+        return req
+
 
 class TelegramSDK(TelegramClient):
     """
