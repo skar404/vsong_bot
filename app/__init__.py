@@ -1,3 +1,6 @@
+import asyncio
+from asyncio import sleep, ensure_future
+
 import aio_pika
 import aiohttp
 import sentry_sdk
@@ -9,6 +12,7 @@ from sanic.log import LOGGING_CONFIG_DEFAULTS, logger
 
 from app import settings
 from app.clients.Telegram import TelegramSDK
+from app.consume import consumer_download_song
 from app.settings import PSQL_USER, PSQL_PASSWORD, PSQL_HOST, PSQL_POST, PSQL_DATE_BASE, SENTRY_KEY, RABBIT_HOST, \
     RABBIT_PORT, RABBIT_USER, RABBIT_PASSWORD, RABBIT_VHOST, RABBIT_SSL
 from app.web import bp, bot_handler
@@ -28,7 +32,7 @@ sentry_sdk.init(
 application = SanicApp(__name__, log_config=LOGGING_CONFIG_DEFAULTS)
 
 
-def create_app(app: SanicApp) -> SanicApp:
+def create_app(app: SanicApp, web=False, consumer=False) -> SanicApp:
     @app.listener('before_server_start')
     async def init(app: SanicApp, loop):
         app.aio_pika = await aio_pika.connect_robust(
@@ -53,24 +57,23 @@ def create_app(app: SanicApp) -> SanicApp:
         )
         logger.info('init pg_client')
 
-        # update telegram web hook
-        assert (await TelegramSDK().update_web_hook()).get('ok')
-        logger.info('init update_web_hook')
+        # Не критично, но количество запросов зависит от WORKERS_NUM
+        req = (await TelegramSDK().update_web_hook()).get('ok')
+        logger.info('init update_web_hook status {}'.format(req))
 
-    @app.listener('after_server_stop')
-    async def finish(app, loop):
-        app.aiohttp_session.close()
-        loop.run_until_complete(app.session.close())
-        loop.close()
+    if consumer:
+        @app.listener('before_server_start')
+        async def run_consumer(app: SanicApp, loop):
+            ensure_future(consumer_download_song(app), loop=loop)
 
-    app.blueprint(bp)
-    bot_handler.register()
-
+    if web:
+        app.blueprint(bp)
+        bot_handler.register()
     return app
 
 
 def run_web():
-    create_app(application).go_fast(
+    create_app(application, web=True, consumer=True).go_fast(
         debug=settings.DEBUG,
         workers=settings.WORKERS_NUM,
         auto_reload=False  # если включить то сломаеться дебаг в PyCharm
