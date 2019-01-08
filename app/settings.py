@@ -38,3 +38,13 @@ AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='')
 AWS_END_POINT_URL = env('AWS_END_POINT_URL', default='')
 AWS_REGION_NAME = env('AWS_REGION_NAME', default='')
 AWS_BUCKET = env('AWS_BUCKET', default='tmp')
+
+VK_LOGIN = env('VK_LOGIN', default='')
+VK_PASSWORD = env('VK_PASSWORD', default='')
+
+VK_APP_ID = env('VK_APP_ID', default='')
+
+PROXY_USER = env('PROXY_USER', default='')
+PROXY_PASSWORD = env('PROXY_PASSWORD', default='')
+PROXY_IP = env('PROXY_IP', default='')
+PROXY_PORT = env('PROXY_PORT', cast=int, default=8080)

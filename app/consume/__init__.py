@@ -1,13 +1,19 @@
 import json
 
 from sanic.log import logger
+from vk_api.audio import VkAudio
 
-from app import TelegramSDK
+from app.clients.Telegram import TelegramSDK
 from app.bot.handler import RabbitMessageType
 from app.settings import RABBIT_QUERY
 
 
 async def download_song(message):
+    from app import application
+
+    vkaudio = VkAudio(application.vk_session)
+    song_list = [i for i in vkaudio.search(q=message['text'])]
+
     await TelegramSDK().send_message(chat_id=message['chat_id'], message='Вот ваш трек: {}'.format(
         message['text']
     ))
