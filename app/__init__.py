@@ -1,8 +1,10 @@
 from asyncio import ensure_future
 
 import aio_pika
+import aiobotocore
 import aiohttp
 import sentry_sdk
+from aiobotocore import AioSession
 from sentry_sdk.integrations.sanic import SanicIntegration
 from sanic import Sanic
 from aiohttp import ClientSession
@@ -13,7 +15,8 @@ from app import settings
 from app.clients.Telegram import TelegramSDK
 from app.consume import consumers_init
 from app.settings import PSQL_USER, PSQL_PASSWORD, PSQL_HOST, PSQL_POST, PSQL_DATE_BASE, SENTRY_KEY, RABBIT_HOST, \
-    RABBIT_PORT, RABBIT_USER, RABBIT_PASSWORD, RABBIT_VHOST, RABBIT_SSL, RABBIT_QUERY, RABBIT_EXCHANGE
+    RABBIT_PORT, RABBIT_USER, RABBIT_PASSWORD, RABBIT_VHOST, RABBIT_SSL, RABBIT_QUERY, RABBIT_EXCHANGE, \
+    AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_END_POINT_URL, AWS_REGION_NAME
 from app.web import bp, bot_handler
 
 
@@ -21,6 +24,7 @@ class SanicApp(Sanic):
     aio_pika: aio_pika.Connection
     aiohttp_session: ClientSession
     pg_client: Engine
+    botocore_client: AioSession
 
 
 sentry_sdk.init(
@@ -34,6 +38,15 @@ application = SanicApp(__name__, log_config=LOGGING_CONFIG_DEFAULTS)
 def create_app(app: SanicApp, web=False, consumer=False) -> SanicApp:
     @app.listener('before_server_start')
     async def init(app: SanicApp, loop):
+        app.botocore_client = aiobotocore.get_session().create_client(
+            service_name='s3',
+            region_name=AWS_REGION_NAME,
+            endpoint_url=AWS_END_POINT_URL,
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            verify=False
+        )
+
         app.aio_pika = await aio_pika.connect_robust(
             host=RABBIT_HOST,
             port=RABBIT_PORT,
