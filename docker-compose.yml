@@ -1,6 +1,7 @@
 version: '3'
 services:
   bot:
+    restart: always
     image: registry.gitlab.com/user502/vsong_bot:latest
     environment:
       - DEBUG
@@ -41,7 +42,10 @@ services:
       - PROXY_PASSWORD
       - PROXY_IP
       - PROXY_PORT
+    expose:
+      - "8080"
   postgres:
+    restart: always
     image: postgres:11.1
     environment:
       - POSTGRES_USER
@@ -59,11 +63,12 @@ services:
       - "5672:5672"
       - "15672:15672"
   nginx:
+    restart: always
     image: nginx:1.15.8
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./.nginx:/etc/nginx/conf.d
-  certbot:
-    image: certbot/certbot
+    links:
+      - bot:bot
