@@ -5,7 +5,7 @@ from vk_api.audio import VkAudio
 
 from app.clients.Telegram import TelegramSDK
 from app.bot.handler import RabbitMessageType
-from app.settings import RABBIT_QUERY
+from app.settings import RABBITMQ_QUERY
 
 
 async def download_song(message):
@@ -34,7 +34,7 @@ async def consumer_bot_message(message):
 
 
 async def consumers_init(app):
-    queue_name = RABBIT_QUERY
+    queue_name = RABBITMQ_QUERY
 
     # Creating channel
     channel = await app.aio_pika.channel()

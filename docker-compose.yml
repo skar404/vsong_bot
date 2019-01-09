@@ -1,19 +1,69 @@
 version: '3'
 services:
+  bot:
+    image: registry.gitlab.com/user502/vsong_bot:latest
+    environment:
+      - DEBUG
+      - WORKERS_NUM
+
+      - BOT_SECRET_URL
+      - BOT_TOKEN
+      - BOT_WEB_HOOK
+
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - PSQL_HOST
+      - PSQL_POST
+      - POSTGRES_DB
+
+      - SENTRY_KEY
+
+      - RABBITMQ_HOST
+      - RABBITMQ_PORT
+      - RABBITMQ_DEFAULT_USER
+      - RABBITMQ_DEFAULT_PASS
+      - RABBITMQ_DEFAULT_VHOST
+      - RABBITMQ_SSL
+      - RABBITMQ_QUERY
+      - RABBITMQ_EXCHANGE
+
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_END_POINT_URL
+      - AWS_REGION_NAME
+      - AWS_BUCKET
+
+      - VK_LOGIN
+      - VK_PASSWORD
+      - VK_APP_ID
+
+      - PROXY_USER
+      - PROXY_PASSWORD
+      - PROXY_IP
+      - PROXY_PORT
   postgres:
     image: postgres:11.1
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: dev
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
     ports:
       - "5432:5432"
   rabbitmq:
     image: rabbitmq:3.7.8-management
     environment:
-      RABBITMQ_DEFAULT_USER: rebbitmq
-      RABBITMQ_DEFAULT_PASS: 1234
-      RABBITMQ_DEFAULT_VHOST: dev_vhost
+      - RABBITMQ_DEFAULT_USER
+      - RABBITMQ_DEFAULT_PASS
+      - RABBITMQ_DEFAULT_VHOST
     ports:
       - "5672:5672"
       - "15672:15672"
+  nginx:
+    image: nginx:1.15.8
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./.nginx:/etc/nginx/conf.d
+  certbot:
+    image: certbot/certbot

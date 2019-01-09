@@ -4,7 +4,7 @@ from aio_pika import Message
 
 from app import TelegramSDK
 from app.bot.router import TelegramRouter
-from app.settings import BOT_TOKEN, RABBIT_QUERY, RABBIT_EXCHANGE
+from app.settings import BOT_TOKEN, RABBITMQ_QUERY, RABBITMQ_EXCHANGE
 
 bot_handler = TelegramRouter(bot_token=BOT_TOKEN)
 
@@ -36,7 +36,7 @@ async def get_track(message, request):
     message_id = req['result']['message_id']
 
     channel = await request.app.aio_pika.channel()
-    exchange = await channel.declare_exchange(RABBIT_EXCHANGE)
+    exchange = await channel.declare_exchange(RABBITMQ_EXCHANGE)
 
     await exchange.publish(
         Message(json.dumps({
@@ -45,5 +45,5 @@ async def get_track(message, request):
             'message_id': message_id,
             'text': song_text
         }).encode()),
-        routing_key=RABBIT_QUERY,
+        routing_key=RABBITMQ_QUERY,
     )

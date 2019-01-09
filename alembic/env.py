@@ -11,7 +11,7 @@ from sqlalchemy.engine.url import URL
 
 
 sys.path.append(os.getcwd())
-from app import PSQL_USER, PSQL_PASSWORD, PSQL_HOST, PSQL_POST, PSQL_DATE_BASE
+from app import POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_POST, POSTGRES_DB
 from app.models import Base
 
 config = context.config
@@ -64,11 +64,11 @@ def run_migrations_online():
     alembic_config = config.get_section(config.config_ini_section)
     alembic_config['sqlalchemy.url'] = URL(
         drivername='postgresql',
-        username=PSQL_USER,
-        password=PSQL_PASSWORD,
-        host=PSQL_HOST,
-        port=PSQL_POST,
-        database=PSQL_DATE_BASE
+        username=POSTGRES_USER,
+        password=POSTGRES_PASSWORD,
+        host=POSTGRES_HOST,
+        port=POSTGRES_POST,
+        database=POSTGRES_DB
     )
     engine = engine_from_config(alembic_config)
 
