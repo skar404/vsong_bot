@@ -113,8 +113,10 @@ def create_app(app: SanicApp, web=False, consumer=False) -> SanicApp:
 
 
 def run_web():
+    print(settings.SANIC_HOST)
     create_app(application, web=True, consumer=True).go_fast(
         debug=settings.DEBUG,
         workers=settings.WORKERS_NUM,
+        host=settings.SANIC_HOST,
         auto_reload=False  # если включить то сломаеться дебаг в PyCharm
     )

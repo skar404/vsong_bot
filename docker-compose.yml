@@ -13,8 +13,8 @@ services:
 
       - POSTGRES_USER
       - POSTGRES_PASSWORD
-      - PSQL_HOST
-      - PSQL_POST
+      - POSTGRES_HOST
+      - POSTGRES_POST
       - POSTGRES_DB
 
       - SENTRY_KEY
@@ -42,8 +42,14 @@ services:
       - PROXY_PASSWORD
       - PROXY_IP
       - PROXY_PORT
+    links:
+      - postgres:postgres
+      - rabbitmq:rabbitmq
+    depends_on:
+      - postgres
+      - rabbitmq
     expose:
-      - "8080"
+      - "8000"
   postgres:
     restart: always
     image: postgres:11.1
@@ -72,3 +78,5 @@ services:
       - ./.nginx:/etc/nginx/conf.d
     links:
       - bot:bot
+    depends_on:
+      - bot

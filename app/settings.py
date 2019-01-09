@@ -7,6 +7,7 @@ env.read_envfile(os.path.join(BASE_DIR, '.env'))
 
 
 DEBUG = env('DEBUG', cast=bool, default=True)
+SANIC_HOST = env('SANIC_HOST', cast=str, default='127.0.0.1')
 WORKERS_NUM = env('WORKERS_NUM', cast=int, default=1)
 
 BOT_SECRET_URL = env('BOT_SECRET_URL', default='test')
