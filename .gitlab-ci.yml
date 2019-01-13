@@ -27,6 +27,6 @@ deploy:
 
   script:
     - chmod +x bin/deploy.sh
-    - bin/ci_deploy.sh
+    - bin/deploy.sh
   only:
     - master
