@@ -1,2 +1,7 @@
 .nginx
 bin
+
+.gitlab-ci.yml
+docker-compose.dev.yml
+docker-compose.yml
+README.md
