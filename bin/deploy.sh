@@ -8,11 +8,6 @@ DOCKER_COMPOSE_PROJECT_NAME=vsong_bot
 
 mkdir -p $DOCKER_CERT_PATH
 
-echo "test_env $test_env"
-echo "test_env_2 $test_env_2"
-echo "test_env_3 $test_env_3"
-
-exit
 
 echo "$PROD_CA_PEM" | tr -d '\r' > $DOCKER_CERT_PATH/ca.pem
 echo "$PROD_CERT_PEM" | tr -d '\r' > $DOCKER_CERT_PATH/cert.pem

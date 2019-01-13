@@ -8,17 +8,17 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
 
-#build:
-#  stage: build
-#  script:
-#    - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} registry.gitlab.com
-#    - docker pull $CONTAINER_IMAGE:latest || true
-##    - docker build --cache-from $CONTAINER_IMAGE:latest --tag $CONTAINER_IMAGE:$CI_BUILD_REF --tag $CONTAINER_IMAGE:latest .
-##    - docker push $CONTAINER_IMAGE:$CI_BUILD_REF
-#    - docker build --cache-from $CONTAINER_IMAGE:latest --tag $CONTAINER_IMAGE:latest .
-#    - docker push $CONTAINER_IMAGE:latest
-#  only:
-#    - master
+build:
+  stage: build
+  script:
+    - docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} registry.gitlab.com
+    - docker pull $CONTAINER_IMAGE:latest || true
+#    - docker build --cache-from $CONTAINER_IMAGE:latest --tag $CONTAINER_IMAGE:$CI_BUILD_REF --tag $CONTAINER_IMAGE:latest .
+#    - docker push $CONTAINER_IMAGE:$CI_BUILD_REF
+    - docker build --cache-from $CONTAINER_IMAGE:latest --tag $CONTAINER_IMAGE:latest .
+    - docker push $CONTAINER_IMAGE:latest
+  only:
+    - master
 
 deploy:
   stage: deploy
