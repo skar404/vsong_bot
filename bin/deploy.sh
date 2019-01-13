@@ -20,7 +20,7 @@ export DOCKER_HOST=tcp://$PROD_STAGING_HOST:2376
 
 docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} registry.gitlab.com
 
-ping -c 5 digitalocean.com
+docker ps
 
 docker-compose \
     -f docker-compose.yml \
