@@ -19,3 +19,14 @@ build:
     - docker push $CONTAINER_IMAGE:latest
   only:
     - master
+
+deploy:
+  stage: deploy
+
+  image: "jonaskello/docker-and-compose"
+
+  script:
+    - chmod +x bin/ci_deploy.sh
+    - bin/ci_deploy.sh
+  only:
+    - master
