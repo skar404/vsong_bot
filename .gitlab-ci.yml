@@ -26,9 +26,7 @@ deploy:
   image: "jonaskello/docker-and-compose"
 
   script:
-    - ls -Ahl # test
-    - ls -Ahl ./bin/ # test
-    - chmod +x ./bin/ci_deploy.sh
-    - ./bin/ci_deploy.sh
+    - chmod +x bin/deploy.sh
+    - bin/ci_deploy.sh
   only:
     - master
