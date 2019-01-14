@@ -20,8 +20,6 @@ export DOCKER_HOST=tcp://$PROD_STAGING_HOST:2376
 
 docker login -u gitlab-ci-token -p ${CI_JOB_TOKEN} registry.gitlab.com
 
-python -c "import ssl; print(ssl.OPENSSL_VERSION)"
-
 docker-compose \
     -f docker-compose.yml \
     --project-name $DOCKER_COMPOSE_PROJECT_NAME \
