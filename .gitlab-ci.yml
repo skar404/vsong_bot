@@ -23,7 +23,7 @@ build:
 deploy:
   stage: deploy
 
-  image: skar404/docker-and-compose
+  image: username502/docker-and-compose
 
   script:
     - chmod +x bin/deploy.sh
