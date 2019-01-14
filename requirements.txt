@@ -13,7 +13,7 @@ idna==2.8
 Mako==1.0.7
 manage.py==0.2.10
 MarkupSafe==1.1.0
-marshmallow==3.0.0rc2
+marshmallow==3.0.0rc3
 multidict==4.5.2
 psycopg2==2.7.6.1
 psycopg2-binary==2.7.6.1
