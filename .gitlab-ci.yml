@@ -23,7 +23,7 @@ build:
 deploy:
   stage: deploy
 
-  image: jonaskello/docker-and-compose:1.12.1-1.8.0
+  image: skar404/docker-and-compose
 
   script:
     - chmod +x bin/deploy.sh
