@@ -8,10 +8,8 @@ pipeline:
       - DRONE_TAG=${DRONE_TAG}
       - DRONE_COMMIT=${DRONE_COMMIT}
       - DRONE_BRANCH=${DRONE_BRANCH}
-    tags:
-      - ${DRONE_COMMIT_BRANCH/\//-}
     when:
-      branch: [master]
+      branch: master
       event: push
 
   deploy:
@@ -21,7 +19,7 @@ pipeline:
     port: 22
     secrets: [ ssh_key ]
     script:
-      - cd /srv/remark
+      - cd /srv/vsong_bot
       - docker-compose pull
       - docker-compose up -d
     when:
