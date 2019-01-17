@@ -14,7 +14,7 @@ pipeline:
 
   deploy:
     image: appleboy/drone-ssh
-    host: host
+    host: 8.8.8.8
     username: ${user_name}
     port: 22
     secrets: [ ssh_key ]
