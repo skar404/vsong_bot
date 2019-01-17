@@ -14,10 +14,10 @@ pipeline:
 
   deploy:
     image: appleboy/drone-ssh
-    host: 8.8.8.8
+    host: {host}
     username: ${user_name}
     port: 22
-    secrets: [ ssh_key ]
+    secrets: [ ssh_key, host, user_name]
     script:
       - mkdir /srv/vsong_bot/t
       - cd /srv/vsong_bot
