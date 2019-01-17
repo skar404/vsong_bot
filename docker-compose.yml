@@ -51,7 +51,7 @@ services:
     expose:
       - "8000"
     ports:
-      - "8000:8000"
+      - "8000"
   postgres:
     restart: always
     image: postgres:11.1
