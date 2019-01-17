@@ -14,6 +14,7 @@ pipeline:
 
   deploy:
     image: appleboy/drone-ssh
+    host: bot.guser.ru
     username: root
     port: 22
     secrets: [ ssh_key, host, user_name]
