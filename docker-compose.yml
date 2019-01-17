@@ -50,6 +50,8 @@ services:
       - rabbitmq
     expose:
       - "8000"
+    ports:
+      - "8000:8000"
   postgres:
     restart: always
     image: postgres:11.1
@@ -68,22 +70,22 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-  nginx:
-    restart: always
-    image: umputun/nginx-le:1.1.0
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8443:8443"
-    volumes:
-      - ./etc/ssl:/etc/nginx/ssl
-      - ./.nginx/app.conf:/etc/nginx/service.conf
-    links:
-      - bot:bot
-    depends_on:
-      - bot
-    environment:
-      - TZ=GMT
-      - LETSENCRYPT=true
-      - LE_EMAIL
-      - LE_FQDN
+#  nginx:
+#    restart: always
+#    image: umputun/nginx-le:1.1.0
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#      - "8443:8443"
+#    volumes:
+#      - ./etc/ssl:/etc/nginx/ssl
+#      - ./.nginx/app.conf:/etc/nginx/service.conf
+#    links:
+#      - bot:bot
+#    depends_on:
+#      - bot
+#    environment:
+#      - TZ=GMT
+#      - LETSENCRYPT=true
+#      - LE_EMAIL
+#      - LE_FQDN
