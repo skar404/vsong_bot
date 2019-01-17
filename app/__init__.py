@@ -119,8 +119,8 @@ def create_app(app: SanicApp, web=False, consumer=False) -> SanicApp:
         bot_handler.register()
     return app
 
+
 def run_web():
-    print(settings.SANIC_HOST)
     create_app(application, web=True, consumer=True).go_fast(
         debug=settings.DEBUG,
         workers=settings.WORKERS_NUM,

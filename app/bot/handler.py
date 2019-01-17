@@ -14,10 +14,21 @@ class RabbitMessageType:
 
 
 @bot_handler.command(command='start')
-async def send_message(message, _request):
+async def command_start(message, _request):
     text = 'Привет @{user_name},\n' \
         'Просто отправь мне имя артиста и/или название композиции,\n' \
         'и я найду эту песню для тебя!'.format(user_name=message['message']['from']['username'])
+
+    await TelegramSDK() \
+        .send_message(chat_id=message['message']['chat']['id'], message=text)
+
+
+@bot_handler.command(command='help')
+async def command_help(message, _request):
+    text = 'Привет @{user_name},\n' \
+        'У меня есть несколько фишечек, допустим:\n' \
+        ' - вы не нашли трек тогда можете ввести названив в кавычках "моя песня" и \n'\
+        'поишим по всей нашей базе : )'.format(user_name=message['message']['from']['username'])
 
     await TelegramSDK() \
         .send_message(chat_id=message['message']['chat']['id'], message=text)
