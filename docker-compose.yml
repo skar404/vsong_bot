@@ -2,7 +2,7 @@ version: '3'
 services:
   bot:
     restart: always
-    image: registry.gitlab.com/user502/vsong_bot:latest
+    image: username502/vsong_bot:latest
     environment:
       - DEBUG
       - WORKERS_NUM
