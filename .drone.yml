@@ -19,6 +19,7 @@ pipeline:
     port: 22
     secrets: [ ssh_key ]
     script:
+      - mkdir /srv/vsong_bot/t
       - cd /srv/vsong_bot
       - docker-compose pull
       - docker-compose up -d
