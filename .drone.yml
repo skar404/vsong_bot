@@ -2,7 +2,7 @@ pipeline:
   build:
     image: plugins/docker
     repo: username502/vsong_bot
-    secrets: [ docker_username, docker_password]
+    secrets: [docker_username, docker_password]
     build_args:
       - DRONE=${DRONE}
       - DRONE_TAG=${DRONE_TAG}
@@ -11,5 +11,19 @@ pipeline:
     tags:
       - ${DRONE_COMMIT_BRANCH/\//-}
     when:
-      branch: [master, release/*]
+      branch: [master]
+      event: push
+
+  deploy:
+    image: appleboy/drone-ssh
+    host: ${host}
+    username: ${user_name}
+    port: 22
+    secrets: [ ssh_key ]
+    script:
+      - cd /srv/remark
+      - docker-compose pull
+      - docker-compose up -d
+    when:
+      branch: master
       event: push
