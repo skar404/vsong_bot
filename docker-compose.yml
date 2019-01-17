@@ -75,7 +75,6 @@ services:
       hostname: nginx
       restart: always
       container_name: nginx
-      depends_on:
       volumes:
           - ./etc/ssl:/etc/nginx/ssl
           - ./.nginx/app.conf:/etc/nginx/service.conf
