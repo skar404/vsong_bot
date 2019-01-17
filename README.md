@@ -1,6 +1,5 @@
 # vsong bot 
-[![pipeline status](https://gitlab.com/user502/vsong_bot/badges/master/pipeline.svg)](https://gitlab.com/user502/vsong_bot/commits/master)
-[![coverage report](https://gitlab.com/user502/vsong_bot/badges/master/coverage.svg)](https://gitlab.com/user502/vsong_bot/commits/master)
+[![Build Status](https://cloud.drone.io/api/badges/skar404/vsong_bot/status.svg)](https://cloud.drone.io/skar404/vsong_bot)
 
 run app:
 ```bash
