@@ -1,0 +1,15 @@
+pipeline:
+  build:
+    image: plugins/docker
+    repo: skar404/vsong_bot
+    secrets: [ docker_username, docker_password]
+    build_args:
+      - DRONE=${DRONE}
+      - DRONE_TAG=${DRONE_TAG}
+      - DRONE_COMMIT=${DRONE_COMMIT}
+      - DRONE_BRANCH=${DRONE_BRANCH}
+    tags:
+      - ${DRONE_COMMIT_BRANCH/\//-}
+    when:
+      branch: [master, release/*]
+      event: push
