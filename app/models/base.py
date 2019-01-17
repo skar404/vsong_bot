@@ -29,9 +29,15 @@ class MusicModel(Base):
     duration = Column(String(255))
     v_url = Column(String(255), nullable=False)
 
+    vk_id = Column(Integer())
+    owner_id = Column(Integer())
+
     s3_url = Column(String(), nullable=False)
 
     time_created = Column(DateTime(timezone=True), server_default=func.now())
+
+    async def create_music(self, vk_id, owner_id, url, artist, title, duration):
+        pass
 
 
 class UsersStatsModel(Base):

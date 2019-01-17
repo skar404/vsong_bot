@@ -44,6 +44,7 @@ class TelegramRouter:
     async def init_route(self, message, request=None):
         uri = self.get_uri_in_message(message)
         if self.register_routers.get(uri):
+            request['uri'] = uri
             return await self.register_routers[uri].handler(message, request)
 
     def register(self):

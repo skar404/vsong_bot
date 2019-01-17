@@ -5,6 +5,7 @@ from aio_pika import Message
 from app import TelegramSDK
 from app.bot.router import TelegramRouter
 from app.settings import BOT_TOKEN, RABBITMQ_QUERY, RABBITMQ_EXCHANGE
+from app.shortcuts import users_info
 
 bot_handler = TelegramRouter(bot_token=BOT_TOKEN)
 
@@ -14,6 +15,7 @@ class RabbitMessageType:
 
 
 @bot_handler.command(command='start')
+@users_info
 async def command_start(message, _request):
     text = 'Привет @{user_name},\n' \
         'Просто отправь мне имя артиста и/или название композиции,\n' \
@@ -24,6 +26,7 @@ async def command_start(message, _request):
 
 
 @bot_handler.command(command='help')
+@users_info
 async def command_help(message, _request):
     text = 'Привет @{user_name},\n' \
         'У меня есть несколько фишечек, допустим:\n' \
@@ -35,6 +38,7 @@ async def command_help(message, _request):
 
 
 @bot_handler.text()
+@users_info
 async def get_track(message, request):
     chat_id = message['message']['chat']['id']
     song_text = message['message']['text']
