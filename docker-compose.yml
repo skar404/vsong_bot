@@ -87,4 +87,4 @@ services:
           - TZ=GMT
           - LETSENCRYPT=true
           - LE_EMAIL=skar404@gamil.com
-          - LE_FQDN=bot.guser.ru.com
+          - LE_FQDN=bot.guser.ru
