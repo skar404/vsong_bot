@@ -6,6 +6,8 @@ import aiohttp
 import sentry_sdk
 import vk_api
 from aiobotocore import AioSession
+from sanic.exceptions import NotFound
+from sanic.response import text
 from sentry_sdk.integrations.sanic import SanicIntegration
 from sanic import Sanic
 from aiohttp import ClientSession
@@ -30,12 +32,18 @@ class SanicApp(Sanic):
     botocore_client: AioSession
     vk_session: VkApi
 
+
 sentry_sdk.init(
     dsn=SENTRY_KEY,
     integrations=[SanicIntegration()]
 )
 
 application = SanicApp(__name__, log_config=LOGGING_CONFIG_DEFAULTS)
+
+
+@application.exception(NotFound)
+async def ignore_404(_request, _exception):
+    return text('hi :)')
 
 
 def create_app(app: SanicApp, web=False, consumer=False) -> SanicApp:
@@ -110,7 +118,6 @@ def create_app(app: SanicApp, web=False, consumer=False) -> SanicApp:
         app.blueprint(bp)
         bot_handler.register()
     return app
-
 
 def run_web():
     print(settings.SANIC_HOST)
