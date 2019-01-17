@@ -17,7 +17,7 @@ pipeline:
     host: bot.guser.ru
     username: root
     port: 22
-    secrets: [ ssh_key, host, user_name]
+    secrets: [ssh_key]
     script:
       - mkdir /srv/vsong_bot/t
       - cd /srv/vsong_bot
