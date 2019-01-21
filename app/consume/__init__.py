@@ -5,18 +5,42 @@ from vk_api.audio import VkAudio
 
 from app.clients.Telegram import TelegramSDK
 from app.bot.handler import RabbitMessageType
+from app.models import MusicModel
 from app.settings import RABBITMQ_QUERY
+
+
+async def get_vk_song_list(song_text):
+    from app import application
+
+    vk_audio = VkAudio(application.vk_session)
+    return [{
+        'artist': song.get('artist'),
+        'title': song.get('title'),
+        'duration': song.get('duration'),
+        'v_url': song.get('url'),
+        'vk_id': song.get('id'),
+        'owner_id': song.get('owner_id'),
+    } for song in vk_audio.search(q=song_text)]
+
+
+def get_song_text(song_list):
+    return '\n'.join([f'{i}. {song["artist"]} - {song["title"]} ({song["duration"]})\n/song\_{song["id"]}'
+                      for i, song in enumerate(song_list)])
 
 
 async def download_song(message):
     from app import application
 
-    vkaudio = VkAudio(application.vk_session)
-    song_list = [i for i in vkaudio.search(q=message['text'])]
+    song_list = await get_vk_song_list(message['text'])
 
-    await TelegramSDK().send_message(chat_id=message['chat_id'], message='Вот ваш трек: {}'.format(
-        message['text']
-    ))
+    smtp = MusicModel.__table__.insert().values(song_list).returning(*MusicModel.__table__.c)
+    async with application.pg_client.acquire() as conn:
+        cursor = await conn.execute(smtp)
+        rows = await cursor.fetchall()
+        song_insert = [dict(r) for r in rows]
+
+    text = get_song_text(song_insert)
+    await TelegramSDK().send_message(chat_id=message['chat_id'], message=text)
     await TelegramSDK().delete_message(chat_id=message['chat_id'], message_id=message['message_id'])
 
 

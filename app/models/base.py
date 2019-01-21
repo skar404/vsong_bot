@@ -32,7 +32,7 @@ class MusicModel(Base):
     vk_id = Column(Integer())
     owner_id = Column(Integer())
 
-    s3_url = Column(String(), nullable=False)
+    s3_url = Column(String())
 
     time_created = Column(DateTime(timezone=True), server_default=func.now())
 
