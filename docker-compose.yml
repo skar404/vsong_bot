@@ -51,8 +51,8 @@ services:
     expose:
       - "8000"
   postgres:
-    restart: always
     image: postgres:11.1
+    restart: always
     environment:
       - DEBUG=false
       - POSTGRES_USER
@@ -72,20 +72,26 @@ services:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - /srv/docker/rabbit:/var/lib/rabbitmq
+      - /srv/docker/rabbitmq:/var/lib/rabbitmq
+      - /srv/docker/rabbitmq_conf:/etc/rabbitmq
   nginx:
-      image: umputun/nginx-le:latest
-      hostname: nginx
-      restart: always
-      container_name: nginx
-      volumes:
-          - /srv/docker/ssl:/etc/nginx/ssl
-          - ./.nginx/app.conf:/etc/nginx/service.conf
-      ports:
-          - "80:80"
-          - "443:443"
-      environment:
-          - TZ=GMT
-          - LETSENCRYPT=true
-          - LE_EMAIL=skar404@gamil.com
-          - LE_FQDN=bot.guser.ru
+    image: umputun/nginx-le:latest
+    restart: always
+    container_name: nginx
+    volumes:
+      - /srv/docker/ssl:/etc/nginx/ssl
+      - ./.nginx/app.conf:/etc/nginx/service.conf
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - TZ=GMT
+      - LETSENCRYPT=true
+      - LE_EMAIL=skar404@gamil.com
+      - LE_FQDN=bot.guser.ru
+    depends_on:
+      - bot
+
+volumes:
+  rabbitmq:
+    driver: local
