@@ -54,11 +54,14 @@ services:
     restart: always
     image: postgres:11.1
     environment:
+      - DEBUG=false
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
     ports:
       - "5432:5432"
+    volumes:
+      - /srv/docker/postgresql:/var/lib/postgresql
   rabbitmq:
     image: rabbitmq:3.7.8-management
     environment:
@@ -68,13 +71,15 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    volumes:
+      - /srv/docker/rabbit:/var/lib/rabbitmq
   nginx:
       image: umputun/nginx-le:latest
       hostname: nginx
       restart: always
       container_name: nginx
       volumes:
-          - ./etc/ssl:/etc/nginx/ssl
+          - /srv/docker/ssl:/etc/nginx/ssl
           - ./.nginx/app.conf:/etc/nginx/service.conf
       ports:
           - "80:80"
