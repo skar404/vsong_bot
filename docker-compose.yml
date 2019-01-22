@@ -73,7 +73,6 @@ services:
       - "15672:15672"
     volumes:
       - /srv/docker/rabbitmq:/var/lib/rabbitmq
-      - /srv/docker/rabbitmq_conf:/etc/rabbitmq
   nginx:
     image: umputun/nginx-le:latest
     restart: always
