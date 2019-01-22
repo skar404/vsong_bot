@@ -8,16 +8,21 @@ python manage.py web
 ```
 ---
 
-Contributing:
+### Contributing:
 
+
+##### run postgres and rabbitmq:
 ```bash
-// run: postgres, rabbitmq
 docker-compose -f docker-compose.dev.yml
+```
 
-// run https proxy -> localhost:8000
+##### run https proxy, ngrok.host -> localhost:8000:
+```bash
 ngrok http 8000
+```
 
-// create env file
+##### create env file
+```bash
 echo '
 BOT_TOKEN=000000000:AAAAAAA_AAAA_AAAAAAAAAAAAAAAA_AAAAAA
 BOT_WEB_HOOK=https://000000.ngrok.io/bot/{secret_url} 
@@ -38,8 +43,10 @@ AWS_SECRET_ACCESS_KEY=
 AWS_END_POINT_URL=
 AWS_REGION_NAME=
 ' > .env
+```
 
-// run bot app
+##### run bot app: 
+```bash
 pip install -r requirements.txt
 python manage.py web
 ```
