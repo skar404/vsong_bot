@@ -22,7 +22,9 @@ pipeline:
       - cd /srv/vsong_bot
       - git pull --rebase --no-autostash
       - docker-compose pull
-      - docker-compose up -d
+      - docker-compose scale bot=2
+      - sleep 30
+      - docker-compose scale bot=1
     when:
       branch: master
       event: push
