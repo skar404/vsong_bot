@@ -11,17 +11,17 @@ python manage.py web
 ### Contributing:
 
 
-##### run postgres and rabbitmq:
+ 1. run postgres and rabbitmq:
 ```bash
 docker-compose -f docker-compose.dev.yml
 ```
 
-##### run https proxy, ngrok.host -> localhost:8000:
+ 2. run https proxy, ngrok.host -> localhost:8000:
 ```bash
 ngrok http 8000
 ```
 
-##### create env file
+ 3. create env file
 ```bash
 echo '
 BOT_TOKEN=000000000:AAAAAAA_AAAA_AAAAAAAAAAAAAAAA_AAAAAA
@@ -45,7 +45,7 @@ AWS_REGION_NAME=
 ' > .env
 ```
 
-##### run bot app: 
+ 4. run bot app: 
 ```bash
 pip install -r requirements.txt
 python manage.py web
