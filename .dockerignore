@@ -1,7 +1,5 @@
 .nginx
-bin
 
-.gitlab-ci.yml
 docker-compose.*
 README.md
 

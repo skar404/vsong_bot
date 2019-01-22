@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, DateTime, func, ForeignKey
+from sqlalchemy import Column, String, Integer, DateTime, func, ForeignKey, Index
 
 from app.models import Base
 
@@ -24,17 +24,21 @@ class MusicModel(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
 
-    artist = Column(String(255))
-    title = Column(String(255))
+    artist = Column(String(255), index=True)
+    title = Column(String(255), index=True)
     duration = Column(String(255))
     v_url = Column(String(255), nullable=False)
 
-    vk_id = Column(Integer())
-    owner_id = Column(Integer())
+    vk_id = Column(Integer(), index=True)
+    owner_id = Column(Integer(), index=True)
 
     s3_url = Column(String())
 
-    time_created = Column(DateTime(timezone=True), server_default=func.now())
+    time_created = Column(DateTime(timezone=True), server_default=func.now(), index=True)
+
+    __table_args__ = (
+        Index('ui_music_model_id_owner_id_duration', vk_id, owner_id, artist, title, duration, unique=True),
+    )
 
     async def create_music(self, vk_id, owner_id, url, artist, title, duration):
         pass
