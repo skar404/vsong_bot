@@ -25,7 +25,7 @@ async def get_vk_song_list(song_text):
 
 def get_song_text(song_list):
     return '\n'.join([f'{i}. {song["artist"]} - {song["title"]} ({song["duration"]})\n/song\_{song["id"]}'
-                      for i, song in enumerate(song_list)])
+                      for i, song in enumerate(song_list, 1)])
 
 
 async def download_song(message):
