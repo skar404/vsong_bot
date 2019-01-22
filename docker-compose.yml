@@ -1,8 +1,8 @@
 version: '3'
 services:
   bot:
-    restart: always
     image: username502/vsong_bot:latest
+    restart: always
     environment:
       - DEBUG
       - WORKERS_NUM
@@ -77,7 +77,6 @@ services:
   nginx:
     image: umputun/nginx-le:latest
     restart: always
-    container_name: nginx
     volumes:
       - /srv/docker/ssl:/etc/nginx/ssl
       - ./.nginx/app.conf:/etc/nginx/service.conf
@@ -91,7 +90,3 @@ services:
       - LE_FQDN=bot.guser.ru
     depends_on:
       - bot
-
-volumes:
-  rabbitmq:
-    driver: local
