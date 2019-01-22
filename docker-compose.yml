@@ -42,6 +42,7 @@ services:
       - PROXY_PASSWORD
       - PROXY_IP
       - PROXY_PORT
+    command: alembic upgrade head
     links:
       - postgres:postgres
       - rabbitmq:rabbitmq

@@ -2,6 +2,7 @@
 bin
 
 .gitlab-ci.yml
-docker-compose.dev.yml
-docker-compose.yml
+docker-compose.*
 README.md
+
+.pyup.yml
