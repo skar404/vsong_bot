@@ -42,7 +42,6 @@ services:
       - PROXY_PASSWORD
       - PROXY_IP
       - PROXY_PORT
-    command: alembic upgrade head
     links:
       - postgres:postgres
       - rabbitmq:rabbitmq
@@ -51,6 +50,19 @@ services:
       - rabbitmq
     expose:
       - "8000"
+
+  bot_alembic:
+    image: username502/vsong_bot:latest
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_HOST
+      - POSTGRES_POST
+      - POSTGRES_DB
+    command: alembic upgrade head
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:11.1
     restart: always
@@ -63,6 +75,7 @@ services:
       - "5432:5432"
     volumes:
       - /srv/docker/postgresql:/var/lib/postgresql
+
   rabbitmq:
     image: rabbitmq:3.7.8-management
     restart: always
@@ -75,6 +88,7 @@ services:
       - "15672:15672"
     volumes:
       - /srv/docker/rabbitmq:/var/lib/rabbitmq
+
   nginx:
     image: umputun/nginx-le:latest
     restart: always
