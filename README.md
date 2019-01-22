@@ -10,7 +10,6 @@ python manage.py web
 
 ### Contributing:
 
-
  1. run postgres and rabbitmq:
 ```bash
 docker-compose -f docker-compose.dev.yml
@@ -45,7 +44,12 @@ AWS_REGION_NAME=
 ' > .env
 ```
 
- 4. run bot app: 
+ 4. run postgres migration
+```bash
+alembic upgrade head
+```
+
+ 5. run bot app: 
 ```bash
 pip install -r requirements.txt
 python manage.py web
