@@ -24,6 +24,8 @@ ngrok http 8000
 ```bash
 echo '
 BOT_TOKEN=000000000:AAAAAAA_AAAA_AAAAAAAAAAAAAAAA_AAAAAA
+
+# need to leave '{secret_url}' for the function .format
 BOT_WEB_HOOK=https://000000.ngrok.io/bot/{secret_url} 
 
 VK_APP_ID=00000
