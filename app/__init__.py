@@ -16,13 +16,13 @@ from sanic.log import LOGGING_CONFIG_DEFAULTS, logger
 from vk_api import VkApi
 
 from app import settings
-from app.clients.Telegram import TelegramSDK
+from app.clients.telegram import TelegramSDK
 from app.consume import consumers_init
 from app.settings import POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_POST, POSTGRES_DB, SENTRY_KEY, RABBITMQ_HOST, \
     RABBITMQ_PORT, RABBITMQ_DEFAULT_USER, RABBITMQ_DEFAULT_PASS, RABBITMQ_DEFAULT_VHOST, RABBITMQ_SSL, RABBITMQ_QUERY, RABBITMQ_EXCHANGE, \
     AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_END_POINT_URL, AWS_REGION_NAME, VK_LOGIN, VK_PASSWORD, VK_APP_ID, \
     PROXY_USER, PROXY_PASSWORD, PROXY_IP, PROXY_PORT
-from app.web import bp, bot_handler
+from app.web.views import bp, bot_handler
 
 
 class SanicApp(Sanic):

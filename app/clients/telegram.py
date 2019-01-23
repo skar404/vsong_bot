@@ -1,4 +1,4 @@
-from app.clients.Base import BaseClient
+from app.clients.base import BaseClient
 from app.settings import BOT_TOKEN, BOT_WEB_HOOK
 
 
