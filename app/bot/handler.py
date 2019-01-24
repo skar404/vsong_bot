@@ -11,8 +11,8 @@ bot_handler = TelegramRouter(bot_token=BOT_TOKEN)
 
 
 class RabbitMessageType:
+    SEND_SONG_LIST = 'SEND_SONG_LIST'
     DOWNLOAD_SONG = 'DOWNLOAD_SONG'
-
 
 @bot_handler.command(command='start')
 @users_info
@@ -55,7 +55,7 @@ async def get_track(message, request):
 
     await exchange.publish(
         Message(json.dumps({
-            'type': RabbitMessageType.DOWNLOAD_SONG,
+            'type': RabbitMessageType.SEND_SONG_LIST,
             'chat_id': chat_id,
             'message_id': message_id,
             'text': song_text

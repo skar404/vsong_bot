@@ -5,7 +5,6 @@ from envparse import env
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env.read_envfile(os.path.join(BASE_DIR, '.env'))
 
-
 DEBUG = env('DEBUG', cast=bool, default=True)
 SANIC_HOST = env('SANIC_HOST', cast=str, default='0.0.0.0')
 WORKERS_NUM = env('WORKERS_NUM', cast=int, default=1)
@@ -49,3 +48,7 @@ PROXY_USER = env('PROXY_USER', default='')
 PROXY_PASSWORD = env('PROXY_PASSWORD', default='')
 PROXY_IP = env('PROXY_IP', default='')
 PROXY_PORT = env('PROXY_PORT', cast=int, default=8080)
+
+PROXY_FULL_URL = "{}:{}@{}:{}".format(
+    PROXY_USER, PROXY_PASSWORD, PROXY_IP, PROXY_PORT
+)

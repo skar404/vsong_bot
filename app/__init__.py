@@ -18,10 +18,12 @@ from vk_api import VkApi
 from app import settings
 from app.clients.telegram import TelegramSDK
 from app.consume import consumers_init
-from app.settings import POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_POST, POSTGRES_DB, SENTRY_KEY, RABBITMQ_HOST, \
-    RABBITMQ_PORT, RABBITMQ_DEFAULT_USER, RABBITMQ_DEFAULT_PASS, RABBITMQ_DEFAULT_VHOST, RABBITMQ_SSL, RABBITMQ_QUERY, RABBITMQ_EXCHANGE, \
+from app.settings import POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_POST, POSTGRES_DB, SENTRY_KEY, \
+    RABBITMQ_HOST, \
+    RABBITMQ_PORT, RABBITMQ_DEFAULT_USER, RABBITMQ_DEFAULT_PASS, RABBITMQ_DEFAULT_VHOST, RABBITMQ_SSL, RABBITMQ_QUERY, \
+    RABBITMQ_EXCHANGE, \
     AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_END_POINT_URL, AWS_REGION_NAME, VK_LOGIN, VK_PASSWORD, VK_APP_ID, \
-    PROXY_USER, PROXY_PASSWORD, PROXY_IP, PROXY_PORT
+    PROXY_USER, PROXY_PASSWORD, PROXY_IP, PROXY_PORT, PROXY_FULL_URL
 from app.web.views import bp, bot_handler
 
 
@@ -49,19 +51,15 @@ async def ignore_404(_request, _exception):
 def create_app(app: SanicApp, web=False, consumer=False) -> SanicApp:
     @app.listener('before_server_start')
     async def init(app: SanicApp, loop):
-        proxy_full_url = "{}:{}@{}:{}".format(
-            PROXY_USER, PROXY_PASSWORD, PROXY_IP, PROXY_PORT
-        )
-
         app.vk_session = vk_api.VkApi(
             login=VK_LOGIN,
             password=VK_PASSWORD,
             app_id=VK_APP_ID
         )
-        app.vk_session.http.proxies = {
-            'http': 'http://{}/'.format(proxy_full_url),
-            'https': 'https://{}/'.format(proxy_full_url),
-        }
+        # app.vk_session.http.proxies = {
+        #     'http': 'http://{}/'.format(PROXY_FULL_URL),
+        #     'https': 'https://{}/'.format(PROXY_FULL_URL),
+        # }
 
         app.vk_session.auth()
 
