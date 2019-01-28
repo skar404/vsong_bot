@@ -1,6 +1,6 @@
 aiofiles==0.4.0
 aiohttp==3.5.4
-aiopg==0.15.0
+aiopg==0.16.0
 alembic==1.0.6
 async-timeout==3.0.1
 attrs==18.2.0
