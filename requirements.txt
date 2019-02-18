@@ -36,4 +36,4 @@ aiobotocore==0.10.2
 botocore==1.12.96
 wrapt==1.11.1
 beautifulsoup4==4.7.1
-soupsieve==1.7.3
+soupsieve==1.8
