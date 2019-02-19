@@ -1,6 +1,0 @@
-.nginx
-
-docker-compose.*
-README.md
-
-.pyup.yml

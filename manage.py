@@ -1,14 +1,4 @@
-from manager import Manager
-
-from app import run_web
-
-manager = Manager()
-
-
-@manager.command
-def web():
-    run_web()
-
+from vsong_bot.main import main
 
 if __name__ == '__main__':
-    manager.main()
+    main()
