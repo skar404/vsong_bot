@@ -10,6 +10,6 @@ async def init_app():
     return app
 
 
-def main():
+def run_api():
     app = init_app()
     web.run_app(app)
