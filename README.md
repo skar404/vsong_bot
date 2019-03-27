@@ -48,7 +48,8 @@ AWS_REGION_NAME=
 
  4. run postgres migration
 ```bash
-alembic upgrade head
+alembic
+ upgrade head
 ```
 
  5. run bot app: 
