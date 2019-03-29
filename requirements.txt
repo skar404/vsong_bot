@@ -4,7 +4,7 @@ aiohttp==3.5.4
 aiormq==2.3.3
 astroid==2.2.5
 async-timeout==3.0.1
-attrs==18.2.0
+attrs==19.1.0
 cchardet==2.1.4
 chardet==3.0.4
 envparse==0.2.0
