@@ -1,7 +1,7 @@
 aio-pika==5.5.1
 aiodns==2.0.0
 aiohttp==3.5.4
-aiormq==2.3.3
+aiormq==2.4.0
 astroid==2.2.5
 async-timeout==3.0.1
 attrs==19.1.0
