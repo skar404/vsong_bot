@@ -10,7 +10,7 @@ chardet==3.0.4
 envparse==0.2.0
 idna==2.8
 isort==4.3.21
-lazy-object-proxy==1.4.2
+lazy-object-proxy==1.4.3
 manage.py==0.2.10
 mccabe==0.6.1
 multidict==4.5.2
