@@ -5,7 +5,7 @@ aiormq==2.8.0
 astroid==2.3.1
 async-timeout==3.0.1
 attrs==19.2.0
-cchardet==2.1.4
+cchardet==2.1.5
 chardet==3.0.4
 envparse==0.2.0
 idna==2.8
